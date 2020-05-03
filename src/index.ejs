@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Root Config</title>
+  <!--
+    This CSP allows any SSL-enabled host, but you should limit these directives further to increase your app's security.
+    Learn more about CSP policies at https://content-security-policy.com/#directive
+  -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: localhost:*; script-src 'unsafe-inline' https: localhost:*; connect-src https: localhost:* ws://localhost:*; style-src 'unsafe-inline' https:; object-src 'none';">
+  <meta name="importmap-type" content="systemjs-importmap" />
+  <!-- Add your organization's prod import map URL to this script's src  -->
+  <!-- <script type="systemjs-importmap" src="/importmap.json"></script> -->
+  <% if (isLocal) { %>
+  <script type="systemjs-importmap">
+    {
+      "imports": {
+        "react": "https://cdn.jsdelivr.net/npm/react@16.13.0/umd/react.production.min.js",
+        "react-dom": "https://cdn.jsdelivr.net/npm/react-dom@16.13.0/umd/react-dom.production.min.js",
+        "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.3.4/lib/system/single-spa.min.js",
+        "@hcsc/root-config": "//localhost:9000/hcsc-root-config.js",
+        "@hcsc/single-spa-login": "//localhost:9002/hcsc-single-spa-login.js",
+        "@hcsc/single-spa-navbar": "//localhost:9001/hcsc-single-spa-navbar.js",
+        "@hcsc/single-spa-dashboard": "//localhost:9003/hcsc-single-spa-dashboard.js",
+        "@hcsc/single-spa-footer": "//localhost:9004/hcsc-single-spa-footer.js",
+        "@hcsc/single-spa-styles": "//localhost:9005/hcsc-single-spa-styles.js",
+        "@hcsc/single-spa-other": "//localhost:9006/hcsc-single-spa-other.js"
+      }
+    }
+  </script>
+<!--         "@hcsc/single-spa-dashboard": "https://single-spa-test-bucket-adam.s3.us-east-2.amazonaws.com/single-spa-dashboard/1/hcsc-single-spa-dashboard.js" -->
+<!--         "@hcsc/single-spa-login": "https://single-spa-test-bucket-adam.s3.us-east-2.amazonaws.com/single-spa-login/1/hcsc-single-spa-login.js", -->
+<!--         "@hcsc/single-spa-navbar": "https://single-spa-test-bucket-adam.s3.us-east-2.amazonaws.com/single-spa-navbar/1/hcsc-single-spa-navbar.js", -->
+  <script src="https://cdn.jsdelivr.net/npm/import-map-overrides@1.14.6/dist/import-map-overrides.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.3.1/dist/system.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.3.1/dist/extras/amd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.3.1/dist/extras/named-exports.js"></script>
+  <% } else { %>
+  <script src="https://cdn.jsdelivr.net/npm/import-map-overrides@1.14.6/dist/import-map-overrides.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.3.1/dist/system.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.3.1/dist/extras/amd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.3.1/dist/extras/named-exports.min.js"></script>
+  <% } %>
+</head>
+<body>
+  <script>
+    System.import('@hcsc/root-config');
+    System.import('@hcsc/single-spa-styles');
+  </script>
+  <import-map-overrides-full show-when-local-storage="devtools" dev-libs></import-map-overrides-full>
+  <header></header>
+  <main></main>
+  <footer></footer>
+</body>
+</html>
